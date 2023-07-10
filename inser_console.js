@@ -2,6 +2,7 @@ const parser = require("@babel/parser");
 const { readFileCode } = require("./utils");
 const traverse = require("@babel/traverse").default;
 const generate = require("@babel/generator").default;
+const types = require("@babel/types");
 
 (async function () {
   const sourceCode = await readFileCode("./source_code.js");
@@ -13,10 +14,10 @@ const generate = require("@babel/generator").default;
 
   // 遍历 ast
   traverse(ast, {
-    CallExpression(path, state) {},
+    CallExpression(path, state) {
+      console.log(path);
+    },
   });
   // 生成目标代码以及 sourceMap
   const { code, map } = generate(ast);
-
-  console.log(code, map);
 })();
